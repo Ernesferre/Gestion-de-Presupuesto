@@ -1,4 +1,5 @@
 import Pregunta from './components/Pregunta';
+import Formulario from './components/Formulario';
 import { useState } from 'react';
 
 function App() {
@@ -6,7 +7,17 @@ function App() {
   // Definir el State
   const [presupuesto, guardarPresupuesto] = useState(0);
   const [restante , guardarRestante] = useState (0);
+  const [mostrarpregunta, actualizarPregunta] = useState(true);
+  const [ gastos, guardarGastos] = useState([]);
 
+
+  // Cuando agreguemos un nuevo gasto
+  const agregarNuevoGasto = gasto => {
+    guardarGastos([
+      ...gastos,
+      gasto
+    ])
+  }
 
 
 
@@ -18,18 +29,31 @@ function App() {
         <h1>Gasto Semanal</h1>
 
         <div className="contenido-principal contenido">
-          <Pregunta 
-            guardarPresupuesto={guardarPresupuesto}
-            guardarRestante={guardarRestante}
-          />
-          <div className="row">
-            <div className="one-half column">
-            1
-            </div>
-            <div className="one-half column">
-            2  
-            </div>
-          </div>
+          { mostrarpregunta ? 
+            (
+              <Pregunta 
+                  guardarPresupuesto={guardarPresupuesto}
+                  guardarRestante={guardarRestante}
+                  actualizarPregunta={actualizarPregunta}
+              />
+              ) : (
+                <div className="row">
+                  
+                    <div className="one-half column">
+                      <Formulario
+                        agregarNuevoGasto={agregarNuevoGasto}
+                      />
+                    </div>
+        
+                    <div className="one-half column">
+                      2  
+                    </div>
+    
+                </div>
+
+              ) 
+          }
+          
         </div>
 
      </header>
